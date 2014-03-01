@@ -26,11 +26,20 @@ public class ActivityOne extends Activity {
 	// onResume(), called mCreate, etc.
 	// You will need to increment these variables' values when their
 	// corresponding lifecycle methods get called
-
+	int mCreate; 
+	int mStart;
+	int mResume;
+	int mRestart;
 
 
 	// TODO: Create variables for each of the TextViews, called
         // mTvCreate, etc. 
+	TextView mTvCreate;
+	TextView mTvStart;
+	TextView mTvResume;
+	TextView mTvRestart;
+	
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +49,10 @@ public class ActivityOne extends Activity {
 		// TODO: Assign the appropriate TextViews to the TextView variables
 		// Hint: Access the TextView by calling Activity's findViewById()
 		// textView1 = (TextView) findViewById(R.id.textView1);
-
-
-
+		mTvCreate = (TextView) findViewById(R.id.create);
+		mTvStart = (TextView) findViewById(R.id.start);
+		mTvResume = (TextView) findViewById(R.id.resume);
+		mTvRestart = (TextView) findViewById(R.id.restart);
 
 
 		Button launchActivityTwoButton = (Button) findViewById(R.id.bLaunchActivityTwo); 
@@ -55,10 +65,10 @@ public class ActivityOne extends Activity {
 				// Hint: use Context's startActivity() method
 
 				// Create an intent stating which Activity you would like to start
-
-				
+				Intent i = new Intent(ActivityOne.this, ActivityTwo.class);
+								
 				// Launch the Activity using the intent
-
+				startActivity(i);
 			
 			}
 		});
@@ -69,18 +79,20 @@ public class ActivityOne extends Activity {
 			// TODO:
 			// Restore value of counters from saved state
 			// Only need 4 lines of code, one for every count variable
-			
-		
+			mStart = savedInstanceState.getInt(START_KEY);
+			mRestart = savedInstanceState.getInt(RESTART_KEY);
+			mResume = savedInstanceState.getInt(RESUME_KEY);
+			mCreate = savedInstanceState.getInt(CREATE_KEY);
 		}
 
 		// TODO: Emit LogCat message
-
+		Log.e(TAG, CREATE_KEY);
 
 		// TODO:
 		// Update the appropriate count variable
 		// Update the user interface via the displayCounts() method
-
-
+		mStart++;
+		displayCounts();
 
 	}
 
@@ -91,12 +103,13 @@ public class ActivityOne extends Activity {
 		super.onStart();
 
 		// TODO: Emit LogCat message
-
+		Log.e(TAG, START_KEY);
 
 		// TODO:
 		// Update the appropriate count variable
 		// Update the user interface
-
+		mStart++;
+		displayCounts();
 
 	}
 
@@ -105,12 +118,13 @@ public class ActivityOne extends Activity {
 		super.onResume();
 
 		// TODO: Emit LogCat message
-
+		Log.e(TAG, RESUME_KEY);
 
 		// TODO:
 		// Update the appropriate count variable
 		// Update the user interface
-
+		mResume++;
+		displayCounts();
 
 	}
 
@@ -119,7 +133,7 @@ public class ActivityOne extends Activity {
 		super.onPause();
 
 		// TODO: Emit LogCat message
-
+		Log.e(TAG, RESUME_KEY);
 	}
 
 	@Override
@@ -127,7 +141,7 @@ public class ActivityOne extends Activity {
 		super.onStop();
 
 		// TODO: Emit LogCat message
-
+		Log.e(TAG, "stop");
 	}
 
 	@Override
@@ -135,12 +149,13 @@ public class ActivityOne extends Activity {
 		super.onRestart();
 
 		// TODO: Emit LogCat message
-
+		Log.e(TAG, RESTART_KEY);
 
 		// TODO:
 		// Update the appropriate count variable
 		// Update the user interface
-
+		mRestart++;
+		displayCounts();
 
 
 	}
@@ -150,7 +165,7 @@ public class ActivityOne extends Activity {
 		super.onDestroy();
 
 		// TODO: Emit LogCat message
-
+		Log.e(TAG, "destroy");
 
 	}
 
@@ -159,10 +174,11 @@ public class ActivityOne extends Activity {
 		// TODO:
 		// Save state information with a collection of key-value pairs
 		// 4 lines of code, one for every count variable
-
-
-
-
+		super.onSaveInstanceState(savedInstanceState);
+		savedInstanceState.putInt(START_KEY, mStart);
+		savedInstanceState.putInt(RESTART_KEY, mRestart);
+		savedInstanceState.putInt(RESUME_KEY, mResume);
+		savedInstanceState.putInt(CREATE_KEY, mCreate);
 
 
 	}
@@ -170,10 +186,10 @@ public class ActivityOne extends Activity {
 	// Updates the displayed counters
 	public void displayCounts() {
 
-		//mTvCreate.setText("onCreate() calls: " + mCreate);
-		//mTvStart.setText("onStart() calls: " + mStart);
-		//mTvResume.setText("onResume() calls: " + mResume);
-		//mTvRestart.setText("onRestart() calls: " + mRestart);
+		mTvCreate.setText("onCreate() calls: " + mCreate);
+		mTvStart.setText("onStart() calls: " + mStart);
+		mTvResume.setText("onResume() calls: " + mResume);
+		mTvRestart.setText("onRestart() calls: " + mRestart);
 	
 	}
 }
